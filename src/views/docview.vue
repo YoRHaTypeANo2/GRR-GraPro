@@ -1,9 +1,9 @@
 <template>
   <div class="index">
-    <p>选择您负责检查的项目</p>
-    <el-button type="primary" @click="xm1()">项目1</el-button>
-    <el-button type="primary" @click="xm2()">项目2</el-button>
-    <el-button type="primary" @click="xm3()">项目3</el-button>
+    <p style="text-align:center;">选择您负责检查的项目</p>
+    <el-button class="DoBtn" type="primary" @click="xm1()">项目1</el-button>
+    <el-button class="DoBtn" type="primary" @click="xm2()">项目2</el-button>
+    <el-button class="DoBtn" type="primary" @click="xm3()">项目3</el-button>
   </div>
 </template>
 
@@ -32,4 +32,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.index{
+  display: flex;
+  flex-direction: column;
+  margin-top: 30%;
+}
+.DoBtn{
+  margin: 20px;
+}
 </style>

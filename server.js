@@ -18,8 +18,14 @@ app.listen(5050, function() {
 //
 
 let userinfo = {
-    info:[],
-    total:0
+    info:[
+        {
+        useremail : '1234567@qq.com',
+        username : '郭瑞瑞',
+        userpassword : '1234567'
+        },
+    ],
+    total:1
 };
 let nowuser = {
     useremail : '888844432@qq.com',
@@ -30,65 +36,65 @@ let CheckQueue = {
     Queue1:[
         {
             useremail : '123132@qq.com',
-            username : 'a',
+            username : '曹志龙',
             userpassword : 'bbbss'
         },{
             useremail : '123132@qq.com',
-            username : 'a',
+            username : '李开伟',
             userpassword : 'bbbss'
         },{
             useremail : '123132@qq.com',
-            username : 'a',
+            username : '孟祥龙',
             userpassword : 'bbbss'
         },{
             useremail : '123132@qq.com',
-            username : 'a',
+            username : '郭瑞瑞',
             userpassword : 'bbbss'
         },{
             useremail : '123132@qq.com',
-            username : 'a',
+            username : '葛浩伟',
             userpassword : 'bbbss'
         },{
             useremail : '123132@qq.com',
-            username : 'a',
+            username : '段澳琦',
             userpassword : 'bbbss'
         }
     ],
     Queue2:[
         {
             useremail : '123132@qq.com',
-            username : 'a',
+            username : '张三',
             userpassword : 'bbbss'
         },{
             useremail : '123132@qq.com',
-            username : 'a',
+            username : '李四',
             userpassword : 'bbbss'
         },{
             useremail : '123132@qq.com',
-            username : 'a',
+            username : '王五',
             userpassword : 'bbbss'
         }
     ],
     Queue3:[
         {
             useremail : '123132@qq.com',
-            username : 'a',
+            username : '小刘',
             userpassword : 'bbbss'
         },{
             useremail : '123132@qq.com',
-            username : 'a',
+            username : '小李',
             userpassword : 'bbbss'
         },{
             useremail : '123132@qq.com',
-            username : 'a',
+            username : '小王',
             userpassword : 'bbbss'
         },{
             useremail : '123132@qq.com',
-            username : 'a',
+            username : '小张',
             userpassword : 'bbbss'
         },{
             useremail : '123132@qq.com',
-            username : 'a',
+            username : '小嘎',
             userpassword : 'bbbss'
         }
     ]
@@ -121,7 +127,7 @@ apiRoutes.post('/vemail', function(req, res) {
         transporter.sendMail(mailOptions, function(error, info) {
             if (error) {
                 res.send("error");
-                return console.log(error);ß
+                return console.log(error);
             }
             console.log('验证码邮件已发送: ' + info.response);
             res.send(Vid);
@@ -130,12 +136,13 @@ apiRoutes.post('/vemail', function(req, res) {
 });
 // 新增用户接口
 apiRoutes.post('/adduser', function(req, res) {
-    let addinfo = req.body.userinfo;
+    console.log('addUser',req.body)
+    let addinfo = req.body;
     let logedlist = userinfo;
-    let canadd = false;
+    let canadd = true;
     for(let i = 0; i < logedlist.total; i++){
         if(addinfo.useremail == logedlist.info[i].useremail){
-            res.send("该邮箱已注册，请直接登录")
+            res.send("Muti")
             canadd = false;
         }else{
             canadd = true;
@@ -150,8 +157,10 @@ apiRoutes.post('/adduser', function(req, res) {
 });
 // 登录接口
 apiRoutes.post('/login', function(req, res) {
-    let loguser = req.body.loguser;
+    let loguser = req.body;
+    console.log('logUser',loguser)
     let logedlist = userinfo;
+    console.log('loglist',logedlist)
     for(let i = 0; i < logedlist.total; i++){
         if(loguser.useremail == logedlist.info[i].useremail && loguser.userpassword == logedlist.info[i].userpassword){
             let nowloger = {
@@ -178,17 +187,17 @@ apiRoutes.post('/getnowlog', function(req, res) {
 });
 // 队列增加1接口
 apiRoutes.post('/queueadd1', function(req, res) {
-    let addinfo = req.body.userinfo;
+    let addinfo = req.body;
     CheckQueue.Queue1.push(addinfo);
 });
 // 队列增加2接口
 apiRoutes.post('/queueadd2', function(req, res) {
-    let addinfo = req.body.userinfo;
+    let addinfo = req.body;
     CheckQueue.Queue2.push(addinfo);
 });
 // 队列增加3接口
 apiRoutes.post('/queueadd3', function(req, res) {
-    let addinfo = req.body.userinfo;
+    let addinfo = req.body;
     CheckQueue.Queue3.push(addinfo);
 });
 // 队列状态1接口
@@ -209,21 +218,21 @@ apiRoutes.post('/checkstatus3', function(req, res) {
 // 队列1下一位接口
 apiRoutes.post('/queuenext1', function(req, res) {
     let queue = CheckQueue.Queue1;
-    queue.pop();
+    queue.shift();
     CheckQueue.Queue1 = queue;
     res.send(queue);
 });
 // 队列2下一位接口
 apiRoutes.post('/queuenext2', function(req, res) {
     let queue = CheckQueue.Queue2;
-    queue.pop();
+    queue.shift();
     CheckQueue.Queue2 = queue;
     res.send(queue);
 });
 // 队列3下一位接口
 apiRoutes.post('/queuenext3', function(req, res) {
     let queue = CheckQueue.Queue3;
-    queue.pop();
+    queue.shift();
     CheckQueue.Queue3 = queue;
     res.send(queue);
 });
